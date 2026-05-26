@@ -1,0 +1,1493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Costa Rica Christmas 2026–27 Trip Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" onerror="this.onerror=null;this.href='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css';"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" onerror="var s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js';document.head.appendChild(s);"></script>
+<style>
+:root {
+  --ink: #1a1a1a;
+  --paper: #faf9f6;
+  --accent: #1b6b4a;
+  --accent-dark: #0f3d2b;
+  --accent-light: #e8f5ee;
+  --warm: #c4763a;
+  --warm-light: #fef3eb;
+  --muted: #6b7280;
+  --border: #e5e2dc;
+  --card-bg: #ffffff;
+  --heading: #0f3d2b;
+  --highlight: #fff2c2;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 17px; scroll-behavior: smooth; }
+body {
+  font-family: 'Source Sans 3', sans-serif;
+  color: var(--ink);
+  background: var(--paper);
+  line-height: 1.72;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Hero ── */
+.hero {
+  position: relative;
+  height: 62vh;
+  min-height: 460px;
+  max-height: 620px;
+  background:
+    linear-gradient(180deg, rgba(15,61,43,0.55) 0%, rgba(15,61,43,0.35) 35%, rgba(15,61,43,0.85) 100%),
+    url('https://lh3.googleusercontent.com/place-photos/AJRVUZNgQXb1jQ88zrTTXTSpa3Xgof6AtAGGslAyFf3KWz6goxIXYHzZ1mEOHDluAkt8CI-iObEI9pNYhUoEQ-_MDSV9xqUog1eKAnmlSiu8u18gY3w6h17uX3RK7OWmrgAyOBq9Gh8e88RrUMm7WZs=s4800-w1600-h1200') center/cover no-repeat,
+    linear-gradient(135deg, #0f3d2b 0%, #1b6b4a 100%);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 4rem 2rem 3.5rem;
+}
+.hero-inner { max-width: 920px; margin: 0 auto; width: 100%; }
+.hero .eyebrow {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.85;
+  margin-bottom: 0.75rem;
+  color: #f4d39a;
+}
+.hero h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(2.2rem, 5.5vw, 3.6rem);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  margin-bottom: 0.8rem;
+  text-shadow: 0 2px 16px rgba(0,0,0,0.3);
+}
+.hero .subtitle {
+  font-size: clamp(1rem, 1.7vw, 1.2rem);
+  font-weight: 300;
+  opacity: 0.92;
+  max-width: 620px;
+}
+.hero .meta {
+  margin-top: 1.25rem;
+  display: flex; flex-wrap: wrap; gap: 1.5rem;
+  font-size: 0.85rem;
+  opacity: 0.75;
+}
+.hero .meta strong { color: #f4d39a; font-weight: 600; }
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0; height: 5px;
+  background: linear-gradient(90deg, var(--warm), #e2a563, var(--warm));
+}
+
+/* ── Nav (trimmed) ── */
+nav {
+  background: rgba(250,249,246,0.97);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+  padding: 0.85rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+nav .container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.75rem;
+  justify-content: center;
+}
+nav a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  transition: color 0.2s;
+}
+nav a:hover { color: var(--accent); }
+
+/* ── Photo peek (hover preview) ── */
+.photo-peek {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: var(--accent-light);
+  color: var(--accent);
+  margin-left: 0.45rem;
+  cursor: pointer;
+  vertical-align: middle;
+  transition: all 0.2s;
+  flex-shrink: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+.photo-peek:hover, .photo-peek.active {
+  background: var(--accent);
+  color: #fff;
+  transform: scale(1.1);
+}
+.photo-peek svg { width: 11px; height: 11px; }
+
+.floating-preview {
+  position: absolute;
+  width: 260px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.18), 0 2px 6px rgba(0,0,0,0.08);
+  padding: 6px;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-4px);
+  transition: opacity 0.18s, transform 0.18s;
+  border: 1px solid rgba(0,0,0,0.04);
+}
+.floating-preview.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+.floating-preview img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 5px;
+  display: block;
+  background: var(--border);
+}
+.floating-preview .fp-caption {
+  padding: 8px 6px 4px;
+  font-size: 0.82rem;
+  color: var(--heading);
+  font-weight: 600;
+  line-height: 1.3;
+}
+.floating-preview .fp-sub {
+  padding: 0 6px 4px;
+  font-size: 0.72rem;
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* Popup photo in map */
+.leaflet-popup-content img.popup-img {
+  width: 100%;
+  height: 110px;
+  object-fit: cover;
+  border-radius: 5px;
+  display: block;
+  margin-bottom: 6px;
+  background: var(--border);
+}
+
+/* ── Testimonials section ── */
+#testimonials {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  padding: 3.5rem max(2rem, calc(50vw - 460px));
+  background:
+    radial-gradient(ellipse at top right, rgba(196,118,58,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at bottom left, rgba(196,118,58,0.06) 0%, transparent 50%),
+    linear-gradient(180deg, #fdf8ec 0%, #f5edd9 100%);
+  border-top: none;
+  overflow: hidden;
+}
+#testimonials::before {
+  content: '"';
+  position: absolute;
+  top: 1.5rem;
+  right: 2rem;
+  font-family: 'DM Serif Display', serif;
+  font-size: 14rem;
+  color: var(--warm);
+  opacity: 0.07;
+  line-height: 0.7;
+  pointer-events: none;
+}
+#testimonials h2 { color: var(--warm); position: relative; }
+#testimonials h2::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: var(--warm);
+  margin-top: 0.6rem;
+}
+#testimonials > p {
+  font-size: 1rem;
+  color: #5a4a32;
+  max-width: 680px;
+}
+
+.testimonial-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+  margin: 2rem 0;
+}
+
+.testimonial-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 1.6rem 1.6rem 1.3rem;
+  box-shadow: 0 6px 20px rgba(120,80,30,0.08), 0 1px 3px rgba(0,0,0,0.04);
+  position: relative;
+  border-top: 3px solid var(--warm);
+  display: flex;
+  flex-direction: column;
+}
+.testimonial-card::before {
+  content: '"';
+  position: absolute;
+  top: 4px;
+  left: 14px;
+  font-family: 'DM Serif Display', serif;
+  font-size: 4.5rem;
+  color: var(--warm);
+  opacity: 0.16;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.testimonial-headline {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.08rem;
+  line-height: 1.35;
+  color: var(--heading);
+  margin-bottom: 0.7rem;
+  position: relative;
+  z-index: 1;
+  padding-left: 0.2rem;
+}
+.testimonial-body {
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: #404040;
+  margin-bottom: 1rem;
+  flex: 1;
+}
+.testimonial-quote {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.35rem;
+  line-height: 1.35;
+  color: var(--heading);
+  font-style: italic;
+  margin: 0.5rem 0 1.25rem;
+  position: relative;
+  z-index: 1;
+  flex: 1;
+}
+
+.testimonial-meta {
+  border-top: 1px solid var(--border);
+  padding-top: 0.85rem;
+  margin-top: auto;
+}
+.testimonial-author {
+  font-size: 0.85rem;
+  color: var(--heading);
+  font-weight: 700;
+  font-feature-settings: "tnum";
+  letter-spacing: -0.01em;
+}
+.testimonial-source {
+  font-size: 0.7rem;
+  color: var(--warm);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+.testimonial-relevance {
+  margin-top: 0.75rem;
+  padding-top: 0.7rem;
+  border-top: 1px dashed var(--border);
+  font-size: 0.78rem;
+  color: var(--accent);
+  font-weight: 600;
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+}
+.testimonial-relevance::before {
+  content: '✓';
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+#testimonials h3 {
+  color: var(--heading);
+  margin-top: 2.5rem;
+}
+
+.patterns-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem 2rem;
+  margin-top: 1rem;
+}
+.patterns-col h4 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.05rem;
+  margin-bottom: 0.85rem;
+  color: var(--heading);
+  font-weight: 400;
+}
+.pattern-item {
+  display: flex;
+  gap: 0.7rem;
+  margin-bottom: 0.7rem;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: #2a2a2a;
+}
+.pattern-icon {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  margin-top: 1px;
+}
+.pattern-confirm .pattern-icon { background: var(--accent); color: #fff; }
+.pattern-warn .pattern-icon { background: var(--warm); color: #fff; }
+
+@media (max-width: 720px) {
+  .testimonial-grid { grid-template-columns: 1fr; }
+  .patterns-grid { grid-template-columns: 1fr; }
+  #testimonials::before { font-size: 8rem; }
+}
+
+/* ── Ruled-out items with inline images ── */
+.ruled-out-item {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 2.25rem;
+  align-items: flex-start;
+}
+.ruled-out-item .ruled-out-text { flex: 1; min-width: 0; }
+.ruled-out-item .ruled-out-text h3 { margin-top: 0; }
+.ruled-out-item .ruled-out-text p { margin-bottom: 0; }
+.ruled-out-img {
+  width: 220px;
+  height: 155px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  margin-top: 0.3rem;
+}
+@media (max-width: 720px) {
+  .ruled-out-item {
+    flex-direction: column-reverse;
+    gap: 0.75rem;
+  }
+  .ruled-out-img {
+    width: 100%;
+    height: 180px;
+    border-radius: 6px;
+  }
+}
+
+/* ── Layout ── */
+.container { max-width: 920px; margin: 0 auto; padding: 0 2rem; }
+section { padding: 3rem 0; }
+section + section { border-top: 1px solid var(--border); }
+h2 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 2rem;
+  color: var(--heading);
+  margin-bottom: 1.25rem;
+  letter-spacing: -0.01em;
+}
+h3 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.4rem;
+  color: var(--heading);
+  margin: 2rem 0 0.75rem;
+}
+p { margin-bottom: 1rem; }
+
+/* ── Verdict card (replaces exec summary) ── */
+.verdict {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-left: 5px solid var(--accent);
+  border-radius: 0 12px 12px 0;
+  padding: 1.75rem 2rem;
+  margin: 1.5rem 0 2rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+}
+.verdict .label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+.verdict .text { font-size: 1.08rem; line-height: 1.6; }
+
+/* ── Callouts ── */
+.callout {
+  border-left: 4px solid var(--accent);
+  background: var(--accent-light);
+  padding: 1.1rem 1.4rem;
+  border-radius: 0 8px 8px 0;
+  margin: 1.5rem 0;
+}
+.callout.warn { border-left-color: var(--warm); background: var(--warm-light); }
+.callout strong { color: var(--heading); }
+
+/* ── Tables ── */
+.table-wrap { overflow-x: auto; margin: 1.5rem 0; border-radius: 8px; border: 1px solid var(--border); }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+thead th {
+  background: var(--heading);
+  color: #fff;
+  font-weight: 600;
+  text-align: left;
+  padding: 0.7rem 0.9rem;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+tbody td {
+  padding: 0.7rem 0.9rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:nth-child(even) { background: #f9f8f5; }
+
+/* ── Linked table rows (map ↔ row) ── */
+tr.linked {
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+}
+tr.linked:hover { background: var(--accent-light) !important; }
+tr.linked td:first-child { font-weight: 600; color: var(--accent-dark); }
+tr.linked td:first-child::before {
+  content: '◉ ';
+  color: var(--accent);
+  margin-right: 0.15rem;
+  font-size: 0.75em;
+  transition: color 0.2s, transform 0.2s;
+  display: inline-block;
+}
+tr.linked:hover td:first-child::before { color: var(--warm); transform: scale(1.3); }
+tr.flash {
+  animation: flashHighlight 1.6s ease-out;
+}
+@keyframes flashHighlight {
+  0% { background: var(--highlight); }
+  100% { background: transparent; }
+}
+
+/* ── Lists ── */
+ul, ol { margin: 0.75rem 0 1rem 1.5rem; }
+li { margin-bottom: 0.4rem; }
+li::marker { color: var(--accent); }
+
+/* ── Map ── */
+#map {
+  width: 100%;
+  height: 540px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+  margin-top: 1rem;
+}
+.leaflet-popup-content-wrapper { border-radius: 8px !important; font-family: 'Source Sans 3', sans-serif !important; }
+.leaflet-popup-content { font-size: 14px !important; line-height: 1.5 !important; margin: 10px 12px !important; }
+.popup-name { font-weight: 700; font-size: 15px; margin-bottom: 2px; color: var(--heading); }
+.popup-note { color: #555; font-size: 13px; }
+.popup-link { display: inline-block; margin-top: 6px; font-size: 12px; color: var(--accent); cursor: pointer; font-weight: 600; }
+.popup-link:hover { text-decoration: underline; }
+
+.map-legend {
+  display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem;
+  margin-top: 0.85rem;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+.map-legend span { display: inline-flex; align-items: center; gap: 0.4rem; }
+.legend-dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; box-shadow: 0 0 0 2px #fff, 0 1px 3px rgba(0,0,0,0.2); }
+.map-hint {
+  margin-top: 0.5rem;
+  font-size: 0.82rem;
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* Marker pulse animation on hover-from-row */
+.marker-pulse {
+  animation: markerPulse 0.8s ease-in-out 2;
+}
+@keyframes markerPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.5); filter: brightness(1.2); }
+}
+
+/* ── Photo cards ── */
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0 2rem;
+}
+.photo-card {
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+.photo-card:hover { transform: translateY(-3px); box-shadow: 0 6px 18px rgba(0,0,0,0.1); }
+.photo-card img { width: 100%; height: 140px; object-fit: cover; display: block; }
+.photo-card .pc-body { padding: 0.7rem 0.9rem; }
+.photo-card .pc-name { font-weight: 700; font-size: 0.9rem; color: var(--heading); }
+.photo-card .pc-note { font-size: 0.78rem; color: var(--muted); margin-top: 0.15rem; line-height: 1.4; }
+
+/* ── Action plan checkboxes ── */
+.checklist {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem 1.75rem 1.25rem;
+  margin: 1rem 0 1.5rem;
+}
+.checklist-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+.checklist-progress {
+  font-size: 0.82rem;
+  color: var(--muted);
+  font-weight: 600;
+}
+.checklist-progress strong { color: var(--accent); font-size: 1.05rem; }
+.progress-bar {
+  width: 100%;
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  margin-bottom: 1.25rem;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), #2d8a62);
+  width: 0%;
+  transition: width 0.4s ease-out;
+  border-radius: 2px;
+}
+.checkitem {
+  display: flex;
+  gap: 0.85rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px dashed var(--border);
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.checkitem:last-child { border-bottom: none; }
+.checkitem input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 22px; height: 22px;
+  border: 2px solid var(--border);
+  border-radius: 5px;
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+  position: relative;
+  transition: all 0.2s;
+  background: #fff;
+}
+.checkitem input[type="checkbox"]:hover { border-color: var(--accent); }
+.checkitem input[type="checkbox"]:checked {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.checkitem input[type="checkbox"]:checked::after {
+  content: '✓';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1;
+}
+.checkitem-body { flex: 1; line-height: 1.5; }
+.checkitem-deadline {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--warm);
+  margin-bottom: 0.2rem;
+}
+.checkitem.done .checkitem-body { opacity: 0.5; text-decoration: line-through; }
+.checkitem.done .checkitem-deadline { text-decoration: none; }
+
+/* ── Footer ── */
+footer {
+  text-align: center;
+  padding: 2.5rem 2rem 3rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+  border-top: 1px solid var(--border);
+  background: #f5f3ee;
+}
+
+/* ── Print ── */
+@media print {
+  nav, .map-hint { display: none; }
+  .hero { height: 220px; min-height: unset; }
+  #map { height: 380px; }
+  section { page-break-inside: avoid; }
+}
+@media (max-width: 640px) {
+  html { font-size: 15px; }
+  .hero { padding: 3rem 1.25rem 2.5rem; height: 56vh; }
+  .container { padding: 0 1.25rem; }
+  #map { height: 420px; }
+  .photo-card img { height: 120px; }
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Trip Plan · Christmas / New Year 2026–27</div>
+    <h1>Costa Rica, with the Whole Family</h1>
+    <div class="subtitle">An adventure-first plan for 8 travelers – two parents, two young kids, four active grandparents – built around Arenal's volcano country.</div>
+    <div class="meta">
+      <span><strong>8</strong> travelers</span>
+      <span><strong>10</strong> days</span>
+      <span><strong>$26–32K</strong> realistic budget</span>
+      <span><strong>Updated</strong> May 2026</span>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <div class="container">
+    <a href="#overview">Overview</a>
+    <a href="#testimonials">Voices</a>
+    <a href="#ruled-out">Ruled Out</a>
+    <a href="#map-section">Map</a>
+    <a href="#itinerary">Itinerary</a>
+    <a href="#lodging">Lodging</a>
+    <a href="#activities">Activities</a>
+    <a href="#budget">Budget</a>
+    <a href="#caveats">Caveats</a>
+  </div>
+</nav>
+
+<main class="container">
+
+<!-- ════════ OVERVIEW (merged Summary + Why Arenal) ════════ -->
+<section id="overview">
+  <h2>The Verdict</h2>
+
+  <div class="verdict">
+    <div class="label">Core Recommendation</div>
+    <div class="text">Base in <strong>Arenal/La Fortuna for 7–8 nights</strong> – it has the densest concentration of family-friendly adventure in Costa Rica, real medical infrastructure in town for the baby, and the shortest meaningful drive (2.5–3 hours) from a major airport. Add a <strong>Central Valley buffer night near SJO</strong> to absorb the travel day, and an optional <strong>2-night tail at Manuel Antonio</strong> if you want a second ecosystem with one of the country's few all-ages wildlife walks. <strong>Book by mid-July 2026</strong> – 90% of holiday-week rooms are gone by September.</div>
+  </div>
+
+  <p>This report covers a trip for 8 travelers – two adults (late 30s), a toddler (~3.5 years), a baby (~5–6 months), and four active grandparents (50s–60s) – over the Christmas/New Year window. The group leans toward adventure over beach, and the itinerary needs to accommodate an infant.</p>
+
+  <h3>A Quick Orientation to Costa Rica</h3>
+  <p>Costa Rica is small – roughly the size of West Virginia – wedged between Nicaragua and Panama. A spine of volcanic mountains runs north to south, splitting the country into ecological zones that behave very differently in winter. The Pacific side runs a defined dry season from December through April. The Caribbean side stays wet year-round, with December actually one of its wetter months. The Northern Plains around Arenal sit on the Pacific side of the divide and dry out steadily through December.</p>
+  <p>The country claims roughly 5% of the world's biodiversity on about 0.03% of its land area, and the eco-tourism infrastructure is among the most developed in Latin America. English is widely spoken in tourist zones, US dollars are accepted at most businesses, and primary highways are reasonably maintained – though secondary mountain roads can be slow. Late December is the peak of the Christmas–New Year travel surge: higher prices, fuller hotels, and mandatory holiday meal surcharges at upscale properties.</p>
+
+  <h3>How We Got to Arenal</h3>
+  <p>We started with six candidate regions and eliminated based on three criteria: density of family-friendly adventure activities, suitability for an infant and four older adults, and transfer time from a major airport.</p>
+  <p>The Pacific beach zones – Guanacaste and the Nicoya Peninsula – came off the list first because the group prioritized adventure over beach time. The Caribbean coast (Tortuguero, Puerto Viejo) came off next: late December falls inside its rainy season, and access requires either a long drive or small-plane flights. The Osa Peninsula is extraordinary for biodiversity, but a six-hour drive (or fifty-minute domestic flight) plus the limited pediatric medical depth in Puerto Jiménez made it too remote for a 5-month-old.</p>
+  <p>That left three serious candidates. Monteverde has cloud-forest charm and good wildlife, but the mountain access road stays curvy even after recent repaving, and the persistent damp is harder on infants. The Central Valley works as a transit hub but lacks adventure density. Arenal/La Fortuna won on all three criteria at once: the highest concentration of activities in the country within a 30-minute radius, real medical infrastructure in town including a 24/7 clinic, and a 2.5–3 hour paved-highway drive from SJO. It also sits low enough (~830 ft) to avoid altitude concerns for the baby.</p>
+  <p>For a second base, the alternatives were "stay in Arenal longer" or add Manuel Antonio. Manuel Antonio earns the trip because it adds a genuinely different ecosystem – coastal rainforest meeting beach – and because the national park's Manglar trail is one of the only truly all-ages, carrier-friendly wildlife walks in the country. The trade-off is two transfer days. The full three-base option (Arenal + Monteverde + Manuel Antonio) is also on the table for groups with higher travel tolerance.</p>
+
+  <h3>Region Reference</h3>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Region</th><th>From SJO</th><th>Adventure</th><th>Baby-Friendly</th><th>Rec. Stay</th><th>Verdict</th></tr></thead>
+      <tbody>
+        <tr><td>Arenal / La Fortuna</td><td>2.5–3 hr</td><td>★★★★★</td><td>★★★★</td><td>7–8 nights</td><td><strong>Primary base</strong></td></tr>
+        <tr><td>Manuel Antonio</td><td>3 hr / 30 min flight</td><td>★★★★</td><td>★★★★</td><td>2–3 nights</td><td>Best second base</td></tr>
+        <tr><td>Monteverde</td><td>3.5–4 hr (curvy)</td><td>★★★★</td><td>★★</td><td>2 nights max</td><td>Cool/damp; only if high travel tolerance</td></tr>
+        <tr><td>Rincón de la Vieja</td><td>4+ hr</td><td>★★★★</td><td>★★★</td><td>Skip</td><td>Only if flying LIR</td></tr>
+        <tr><td>Osa / Puerto Jiménez</td><td>6 hr / 50 min flight</td><td>★★★★★</td><td>★★</td><td>Skip</td><td>Too remote for infant logistics</td></tr>
+        <tr><td>Central Valley</td><td>20–60 min</td><td>★★</td><td>★★★★★</td><td>1 night</td><td>Arrival buffer only</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ════════ TESTIMONIALS ════════ -->
+<section id="testimonials">
+  <h2>What Real Travelers Say</h2>
+  <p>Here's what families with similar group structures said about La Fortuna on unfiltered travel forums – Reddit, Fodor's – before any of them had a reason to sell it.</p>
+
+  <div class="testimonial-grid">
+
+    <article class="testimonial-card">
+      <div class="testimonial-headline">Booking a villa with pool and kitchen made it work with a 3-year-old and a 5-month-old.</div>
+      <div class="testimonial-body">Traveled Costa Rica for a month with that exact age combo. Many people had tried to talk them out of it; Arenal's infrastructure made it an incredible experience. Strongly recommended self-contained accommodations to handle alternating nap times and snack logistics without leaving the property.</div>
+      <div class="testimonial-meta">
+        <div class="testimonial-author">u/allAboutDaMeat</div>
+        <div class="testimonial-source">Reddit · r/costarica · Aug 2023</div>
+        <div class="testimonial-relevance">Family with a 3yo and 5mo – same ages as ours</div>
+      </div>
+    </article>
+
+    <article class="testimonial-card">
+      <div class="testimonial-headline">Did 10 days with grandparents and a toddler. Skipped ziplining entirely – still had an exceptional time.</div>
+      <div class="testimonial-body">Used La Fortuna as their primary hub with wife, 2.5-year-old, and his parents. Soft adventure and nature walks filled the days. Main warning: the drives in and around La Fortuna are intensely winding – build buffer time for motion-sick passengers and frequent roadside stops.</div>
+      <div class="testimonial-meta">
+        <div class="testimonial-author">u/the_hip_e</div>
+        <div class="testimonial-source">Reddit · r/CostaRicaTravel · Aug 2024</div>
+        <div class="testimonial-relevance">Same multi-gen group structure</div>
+      </div>
+    </article>
+
+    <article class="testimonial-card">
+      <div class="testimonial-quote">"Wish we skipped the beach part of our trip… Who needs a beach if you stay at a place with hot springs??"</div>
+      <div class="testimonial-meta">
+        <div class="testimonial-author">u/TheLeatherFeather</div>
+        <div class="testimonial-source">Reddit · r/CostaRicaTravel · Aug 2024</div>
+        <div class="testimonial-relevance">Validates skipping a beach extension</div>
+      </div>
+    </article>
+
+    <article class="testimonial-card">
+      <div class="testimonial-headline">La Fortuna Waterfall = 500 steep wet steps. Bogarín and the Observatory Lodge grounds = easy wildlife.</div>
+      <div class="testimonial-body">Forum veteran with thousands of posts. Specific physical warning: anyone with a young child has to be ready to carry them back up the waterfall stairs. Bogarín Trail (flat, sloths) and the Arenal Observatory Lodge grounds are her picks for low-impact wildlife. EcoTermales over Tabacón as the calmer hot springs option.</div>
+      <div class="testimonial-meta">
+        <div class="testimonial-author">volcanogirl</div>
+        <div class="testimonial-source">Fodor's Travel Talk · Jun 2023</div>
+        <div class="testimonial-relevance">Maps trail demands to the kids' ages</div>
+      </div>
+    </article>
+
+  </div>
+
+  <h3>The Patterns That Keep Coming Up</h3>
+  <div class="patterns-grid">
+    <div class="patterns-col">
+      <h4>Confirms the approach</h4>
+      <div class="pattern-item pattern-confirm">
+        <span class="pattern-icon">✓</span>
+        <span>Active multi-generational families with infants consistently love La Fortuna</span>
+      </div>
+      <div class="pattern-item pattern-confirm">
+        <span class="pattern-icon">✓</span>
+        <span>Hot-springs resorts beat the beach for groups who aren't beach people</span>
+      </div>
+      <div class="pattern-item pattern-confirm">
+        <span class="pattern-icon">✓</span>
+        <span>A single 5–6 night base beats hopping around with an infant</span>
+      </div>
+      <div class="pattern-item pattern-confirm">
+        <span class="pattern-icon">✓</span>
+        <span>Private guides and private van transfers are the consensus pick</span>
+      </div>
+    </div>
+    <div class="patterns-col">
+      <h4>Plan around these</h4>
+      <div class="pattern-item pattern-warn">
+        <span class="pattern-icon">!</span>
+        <span>Mistico Hanging Bridges turns into gridlock after 8 a.m. in peak season</span>
+      </div>
+      <div class="pattern-item pattern-warn">
+        <span class="pattern-icon">!</span>
+        <span>Winding drives can be exhausting; pad every transfer day</span>
+      </div>
+      <div class="pattern-item pattern-warn">
+        <span class="pattern-icon">!</span>
+        <span>Strollers don't work on most trails; bring carriers</span>
+      </div>
+      <div class="pattern-item pattern-warn">
+        <span class="pattern-icon">!</span>
+        <span>Hot springs are too warm for 6-month-olds; pick a resort with cool pools too</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ RULED OUT ════════ -->
+<section id="ruled-out">
+  <h2>What Doesn't Work (and Why)</h2>
+  <p>Several regions came up during planning and were set aside. Each has genuine strengths, and most would make excellent trips for a different group or a different time of year. Here's why each one didn't fit this particular combination of adventure priority, infant logistics, and multi-generational comfort.</p>
+
+  <div class="ruled-out-item">
+    <div class="ruled-out-text">
+      <h3>Caribbean Coast (Tortuguero, Puerto Viejo, Cahuita)</h3>
+      <p>December is one of the wettest months on the Caribbean side – the opposite of what you'd expect from a "winter getaway." Tortuguero, famous for turtle nesting, requires boat access with no road in or out. Puerto Viejo has excellent food and Caribbean culture but thinner adventure infrastructure than Arenal. For a group with an infant, the heavy rain and more remote medical access make this a harder trip to execute safely.</p>
+    </div>
+    <img class="ruled-out-img" src="https://lh3.googleusercontent.com/place-photos/AJRVUZNSIm2IA8ZswAkWkD7Iy5ud-8LwGStcHBNvViUTG38a2pZOi2OV8l7zn9EmpN2dSYvClX-pah3dmTvPobP6_dGfta3FF-7su-74dx--vwrz1Cmk0xkxuE42GW9EpRhuNTmkmrIowZqYXLDGtQ=s4800-w800-h600" alt="Tortuguero National Park" loading="lazy">
+  </div>
+
+  <div class="ruled-out-item">
+    <div class="ruled-out-text">
+      <h3>Guanacaste Beaches (Tamarindo, Flamingo, Papagayo)</h3>
+      <p>The driest, most reliably sunny part of Costa Rica in December. If the group were beach-oriented, this would be the recommendation. The adventure offerings are thinner though: snorkeling, some zip-lining, boat tours. The area runs more resort-oriented than expedition-oriented. Papagayo (including the Andaz, mentioned in the lodging section) is a legitimate beach alternative if preferences shift, but it would be a fundamentally different kind of trip.</p>
+    </div>
+    <img class="ruled-out-img" src="https://lh3.googleusercontent.com/place-photos/AJRVUZOn9nHYv_ESSA6KztSA31EbVvvYwshA1umjK-t-AP6gzgYf4dX1XS8CF1Js-pxxe1Fq8RtAR2CgA5kpGDwGx8qX0P2-BFzC4wikuo1cZIrbY5AY659MHeSn3HYrGSUEP_0JX7oc4tPWurYo=s4800-w680-h340" alt="Tamarindo Beach" loading="lazy">
+  </div>
+
+  <div class="ruled-out-item">
+    <div class="ruled-out-text">
+      <h3>Nicoya Peninsula (Santa Teresa, Montezuma, Nosara)</h3>
+      <p>Surf, yoga, wellness, and great restaurants along a beautiful coastline. Access is the main challenge: 4.5–6.5 hours from SJO by road depending on routing, or a domestic flight plus taxi. The vibe skews toward younger couples and solo travelers, and the tourist infrastructure is thinner for a group of 8 traveling with car seats and a crib. Montezuma and Santa Teresa are better suited to a future adults-only trip.</p>
+    </div>
+    <img class="ruled-out-img" src="https://lh3.googleusercontent.com/place-photos/AJRVUZPeWA9l0e_CrSGi4F3xQA1ouXWzGo2pBPOtTLAnSba98mHozQ2T-0Gq9iPIBZKfEP4njE3a4WBoYVypLfbMLQPVMJFd9wb63W9wadcLJfrxZkn6Ux6eWwJ7GQ_sYmrqOyH5bOgZgYvwzAS1ZhE=s4800-w800-h600" alt="Santa Teresa Beach" loading="lazy">
+  </div>
+
+  <div class="ruled-out-item">
+    <div class="ruled-out-text">
+      <h3>Osa Peninsula / Puerto Jiménez / Corcovado</h3>
+      <p>The biodiversity capital of Costa Rica. Corcovado National Park is considered one of the most biodiverse places on Earth. For experienced adult travelers, it belongs on a bucket list. For this group: 6 hours by road or 50 minutes by domestic flight, the nearest hospital with pediatric depth is hours away, and the lodging options for groups of 8 are limited. Worth considering for a future trip when the kids are older.</p>
+    </div>
+    <img class="ruled-out-img" src="https://lh3.googleusercontent.com/place-photos/AJRVUZPIqQQBBjrmGprjQvrV3s8jSmDsjGy36GJjA1u9UKOyt2tI0G6rMvP518p0_8aMQ6yxxNxEWBZx5WLJvUWY4OU2gJVavWDi76IvB50JpHgyKRd_wlj-7giRZ6eQpJBqgRZBPpn__0d2vajTrMM=s4800-w800-h600" alt="Corcovado National Park" loading="lazy">
+  </div>
+
+  <div class="ruled-out-item">
+    <div class="ruled-out-text">
+      <h3>Monteverde as Primary Base (vs. Short Add-On)</h3>
+      <p>Monteverde appears in this report as a possible 2-night add-on, and it can be a good one. The case against it as the 7–8 night base: the cloud forest stays damp through winter, the activity menu overlaps with Arenal's (hanging bridges, zip-lines, coffee tours) without offering the hot springs or white-water rafting, and the access road stays curvy despite recent repaving. For a short visit the drive is worth it; as a full week with an infant, Arenal covers more ground with less travel hassle.</p>
+    </div>
+    <img class="ruled-out-img" src="https://lh3.googleusercontent.com/place-photos/AJRVUZOrcPDdfqREFGbb2fzv_a4yAaZaLCpAF_F32BipDBFD0GDw1Mk88w3fm_HRAUH7LhUEADsJ3jxDHA3Xla8L5r1xJSjRAZ-sBZI2CA02STXNgbKQamFIuwGY5EhxUeIMOhOyOSl45h2vx_pv=s4800-w800-h600" alt="Monteverde Cloud Forest" loading="lazy">
+  </div>
+
+  <div class="ruled-out-item">
+    <div class="ruled-out-text">
+      <h3>Rincón de la Vieja</h3>
+      <p>An underrated volcano region with hot springs, waterfalls, mud baths, and canyoning at Hacienda Guachipelín. If the group flew into LIR (Liberia) instead of SJO, this would be competitive with Arenal – it's only about an hour from LIR. But LIR has fewer nonstop options from Chicago, and Rincón's total activity density is lower. Worth revisiting if LIR flight pricing turns out to be attractive.</p>
+    </div>
+    <img class="ruled-out-img" src="https://lh3.googleusercontent.com/place-photos/AJRVUZNHTb9oSb2r67aV1aJB9epUNhjTcigL8zOsIQl3ch35VfErtLZ4zQwtIbN1br4CzERfkuItXuw1Je3tIwsff3tbYPjddaLwrOXnudcrhAWrNkOPzXmD-nyNW2p5UelaGKu6TurozMvm9dG6FMk=s4800-w631-h600" alt="Rincón de la Vieja National Park" loading="lazy">
+  </div>
+
+  <div class="ruled-out-item">
+    <div class="ruled-out-text">
+      <h3>San José / Central Valley as Main Base</h3>
+      <p>Some families try to use San José as a central hub and day-trip outward. This doesn't work well because the meaningful adventure activities are 2+ hours away in every direction, and you end up spending more of each day in transit than exploring. One buffer night near SJO is the right move; building the whole trip around the Central Valley underuses the country's strongest destinations.</p>
+    </div>
+    <img class="ruled-out-img" src="https://lh3.googleusercontent.com/place-photos/AJRVUZOEdkYO1wkMXRUZo6EIGnlHCNPgPNtrbwZX-XJ_cPecJv2YIatrNWLvI29vSqhj6EcocY-wuIcHlGwAwERCNfdnh-rk_O_QeaJiVW-WYnf_sQalokIGYKG4ugAUcgNc0UBtrpqX_2IArDN2tYbiXut-8g=s4800-w800-h600" alt="National Theatre, San José" loading="lazy">
+  </div>
+</section>
+
+<!-- ════════ MAP ════════ -->
+<section id="map-section">
+  <h2>Where Everything Is</h2>
+  <p>All lodging options, activities, and transfer points referenced in this report. <strong>Click any marker</strong> to see details and jump to the related row in the tables below. Hover any linked row (marked ◉) to highlight its marker.</p>
+  <div id="map"></div>
+  <div class="map-legend">
+    <span><span class="legend-dot" style="background:#1b6b4a;"></span> Lodging</span>
+    <span><span class="legend-dot" style="background:#c4763a;"></span> Activities</span>
+    <span><span class="legend-dot" style="background:#3b82f6;"></span> Transport</span>
+  </div>
+  <p class="map-hint">Tip: the markers and tables are linked – click a marker, then "Jump to details" to see the full row.</p>
+</section>
+
+<!-- ════════ ITINERARY ════════ -->
+<section id="itinerary">
+  <h2>Itinerary Options</h2>
+
+  <h3>Option A · Single-Base (Best for Infant Rhythm)</h3>
+  <p>Night 1 in the Central Valley near SJO. Nights 2–8 at Arenal. Night 9 back near SJO or direct departure. Minimizes transfer stress, keeps the baby on a stable schedule, and still gives the active adults a full week of adventures. The Central Valley arrival night is a shock absorber – arriving at SJO and immediately pushing 2.5–3 hours to Arenal with an infant, a toddler, and jet-lagged grandparents is asking for trouble.</p>
+
+  <h3>Option B · Two-Base Sampler (Arenal + Manuel Antonio) — <em>Recommended</em></h3>
+  <p>Night 1 Central Valley. Nights 2–6 Arenal. Nights 7–9 Manuel Antonio. Night 10 near SJO or fly from Quepos. Adds a second distinct ecosystem (coastal rainforest vs. volcanic lowland) without the rough mountain roads of Monteverde. Manuel Antonio's Manglar trail – an accessible 726-meter elevated boardwalk – is one of the genuinely all-ages national park experiences in Costa Rica, and the park's wildlife density is among the highest in the country.</p>
+
+  <h3>Option C · Three-Base Full Sampler</h3>
+  <p>Night 1 Central Valley. Nights 2–5 Arenal. Nights 6–7 Monteverde. Nights 8–9 Manuel Antonio. Night 10 departure. Covers rainforest, cloud forest, and coastal wildlife in three genuinely distinct ecosystems. Route 606 to Monteverde is now paved, but it's still curvy and the cloud forest stays damp through the winter. Only do this if the group has high travel tolerance.</p>
+
+  <h3>Sample 10-Day Flow (Option B)</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Day</th><th>Base</th><th>Plan</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Central Valley</td><td>Arrive SJO, short transfer to Xandari, early dinner</td></tr>
+        <tr><td>2</td><td>Arenal</td><td>Morning transfer to La Fortuna; settle in; pool or hot springs evening</td></tr>
+        <tr><td>3</td><td>Arenal</td><td>Mistico Hanging Bridges morning; hot springs evening</td></tr>
+        <tr><td>4</td><td>Arenal</td><td>Split day: active adults zipline or raft; parents + baby do aerial tram or coffee tour</td></tr>
+        <tr><td>5</td><td>Arenal</td><td>Buffer day: late breakfast; optional sloth walk; no heavy scheduling</td></tr>
+        <tr><td>6</td><td>Arenal</td><td>La Fortuna Waterfall morning; Don Juan coffee/chocolate afternoon</td></tr>
+        <tr><td>7</td><td>Manuel Antonio</td><td>Transfer (~3 hr drive or 30-min flight); resort downtime</td></tr>
+        <tr><td>8</td><td>Manuel Antonio</td><td>Early Manuel Antonio National Park via Manglar trail; afternoon rest</td></tr>
+        <tr><td>9</td><td>Manuel Antonio</td><td>Easy wildlife morning or free day; pack</td></tr>
+        <tr><td>10</td><td>Departure</td><td>Return to SJO (~3 hr) or fly Quepos→SJO</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>What a Typical Day Looks Like</h3>
+  <p>Most Arenal days follow a comfortable rhythm. Mornings start with a group activity – a guided walk at Mistico, a sloth-spotting trail at Bogarín, or a coffee tour – wrapping up by late morning. Early afternoon is downtime: pool, naps for the kids, reading by the hot springs, or just wandering the resort grounds. Late afternoon or early evening, the group reconvenes for hot springs (Tabacón, EcoTermales, or the resort's own), followed by dinner in town or on-property. The pace is deliberately unhurried. On days when the adults want higher-adrenaline options (rafting, ziplining, canyoneering), one parent stays back with the baby while the grandparents choose their own track.</p>
+
+  <div class="callout">
+    <strong>Parallel tracks principle:</strong> Design each day as two simultaneous itineraries – an active track (zipline, rafting, canyoneering) and a gentle track (aerial tram, coffee tour, sloth walk, hot springs) – that reconverge for dinner. One parent rotates to baby duty per outing.
+  </div>
+</section>
+
+<!-- ════════ LODGING ════════ -->
+<section id="lodging">
+  <h2>Where to Stay</h2>
+  <p>For 8 people, the right setup is one large multi-bedroom unit or two adjacent suites. Kitchens or kitchenettes matter for bottles, baby-food prep, and early breakfasts. <strong>Book by mid-July 2026.</strong></p>
+
+  <h3>Top Picks at a Glance</h3>
+  <div class="photo-grid">
+    <div class="photo-card" data-loc="springs" style="cursor:pointer;">
+      <img src="https://lh3.googleusercontent.com/places/ANXAkqHw8BvnQKb0Y5wzC3vFCiyo5XI5P9b2--PZ-_vtDhtUtjX9TsUw1VZjfSAOfZP1tKd26vPHkASPWjMbYyOKJktkweOgSYHVzBU=s4800-w800-h600" alt="The Springs Resort" loading="lazy">
+      <div class="pc-body">
+        <div class="pc-name">The Springs – Falcon's Nest</div>
+        <div class="pc-note">5BR resort villa · 28 hot-spring pools · best one-stop-shop</div>
+      </div>
+    </div>
+    <div class="photo-card" data-loc="nayara" style="cursor:pointer;">
+      <img src="https://lh3.googleusercontent.com/places/ANXAkqECZK4Lcxn58BRb09YEXoIjBbfn6QaIZClSi0sZVT9oqsnMCH08JKKHfeuAp0IvxnHuZ08EF_XQz6x5xvtacBjbWqqXZCTRSHk=s4800-w800-h600" alt="Nayara Tented Camp" loading="lazy">
+      <div class="pc-body">
+        <div class="pc-name">Nayara Tented Camp</div>
+        <div class="pc-note">Casa Paloma residence · sleeps 12 · resident sloths</div>
+      </div>
+    </div>
+    <div class="photo-card" data-loc="manoa" style="cursor:pointer;">
+      <img src="https://lh3.googleusercontent.com/places/ANXAkqE0LfBNr28BY5K-oL0IKEKJE6EePDY90btj1dm94YdBNy5QWN9TSVJEhzqJ_yAh6b2bnvJjw-n1ArDtY81WCp2EXYO9__ku6Eo=s4800-w800-h600" alt="Arenal Manoa" loading="lazy">
+      <div class="pc-body">
+        <div class="pc-name">Arenal Manoa</div>
+        <div class="pc-note">Mid-upscale · on-site hot springs · 2BR villas</div>
+      </div>
+    </div>
+    <div class="photo-card" data-loc="tulemar" style="cursor:pointer;">
+      <img src="https://lh3.googleusercontent.com/places/ANXAkqFLae0xB6YNhhYLCKe8X3SyIJTvmlw4vIB1TXQBe7YpXxIlFy9YDW0aXNBstg_XefRCOG3MypcBpYgLkGV2OnHMYnmRaJxXw9E=s4800-w800-h600" alt="Tulemar Resort" loading="lazy">
+      <div class="pc-body">
+        <div class="pc-name">Tulemar Resort</div>
+        <div class="pc-note">Manuel Antonio · 1–4 BR villas · private beach</div>
+      </div>
+    </div>
+  </div>
+
+  <h3>Arenal / La Fortuna</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Property</th><th>Why It Stands Out</th><th>Features</th><th>Peak $/Night</th></tr></thead>
+      <tbody>
+        <tr class="linked" data-loc="springs"><td>The Springs – Falcon's Nest</td><td>Best resort-as-villa fit. Full access to 28 hot-spring pools, Club Río adventure center, wildlife sanctuary.</td><td>5BR/6BA, full kitchen, private plunge pool, cribs on request</td><td>$5,000–$8,000+</td></tr>
+        <tr class="linked" data-loc="nayara"><td>Nayara Tented Camp – Casa Paloma</td><td>Most luxurious. Two Family Tents + shared villa with kitchen, fire pit, hot-spring pool. Resident sloths.</td><td>2 kings + 4 queens, 2 cribs, sleeps 12</td><td>~$5,700</td></tr>
+        <tr class="linked" data-loc="manoa"><td>Arenal Manoa</td><td>Strong mid-to-upscale family fit. On-site hot springs, two-bedroom luxury villas.</td><td>Suite inventory, hot springs included</td><td>$250–$500</td></tr>
+        <tr class="linked" data-loc="observatory"><td>Arenal Observatory Lodge</td><td>Best "stay inside nature" option. 870-acre property with on-site trails.</td><td>Fully equipped kitchen villas</td><td>$200–$400</td></tr>
+        <tr><td>Casa Arena (Vrbo #2946972)</td><td>Best-value large villa. Gated community, private chef available.</td><td>6BR/6+BA, private pool, volcano view</td><td>$600–$1,200</td></tr>
+        <tr><td>Villa Maria (Home Vacations)</td><td>Private pool, volcano view, on-property cook.</td><td>4BR/4BA, +$25/person/night above 10</td><td>$400–$800</td></tr>
+        <tr class="linked" data-loc="volcanolodge"><td>Volcano Lodge & Hot Springs</td><td>Best value with on-site hot springs. Clean rooms, daily-refilled thermal pools plus a regular-temp pool. 10 min from town.</td><td>Standard rooms, no kitchen; book 3–4 rooms for the group</td><td>$130–$250</td></tr>
+        <tr><td>Hotel Lomas del Volcán</td><td>Bungalow-style cabins with volcano views. Heated pool, strong breakfast. 4.7★ on Google.</td><td>Private bungalows, no kitchen; 3–4 rooms needed</td><td>$120–$220</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Manuel Antonio</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Property</th><th>Why It Works</th><th>Features</th></tr></thead>
+      <tbody>
+        <tr class="linked" data-loc="tulemar"><td>Tulemar Resort</td><td>1–4 BR villas with kitchens; strong privacy; resident wildlife</td><td>Hillside terrain reduces stroller convenience</td></tr>
+        <tr class="linked" data-loc="sicomono"><td>Sí Como No</td><td>Easy family resort, 10 min from park, movie theater, family pools</td><td>Simpler operations than Tulemar</td></tr>
+        <tr><td>Parador Nature Resort</td><td>Full-service resort, 7 pools, family suites with multiple bedrooms</td><td>Better if you prefer hotel services over villa complexity</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Central Valley (Arrival/Departure Night)</h3>
+  <p><strong>Xandari Resort & Spa</strong> – linked on the map – is the best strategic buffer hotel near SJO. Large private villas, one with two bedrooms and full kitchen. The <strong>Costa Rica Marriott Hacienda Belén</strong> is a reliable alternative if Xandari is full.</p>
+
+  <h3>Pacific Beach Alternative</h3>
+  <p>If the group prefers a beach resort over rainforest for the second-base option, the <strong>Andaz Costa Rica Resort at Peninsula Papagayo</strong> (Guanacaste, accessed via LIR airport) is a high-end alternative. This swaps the Manuel Antonio rainforest experience for a more conventional luxury beach stay; the trade-off is losing the proximity to Manuel Antonio National Park's wildlife.</p>
+</section>
+
+<!-- ════════ ACTIVITIES ════════ -->
+<section id="activities">
+  <h2>What to Do</h2>
+
+  <h3>High-Adrenaline Track</h3>
+  <p>For the 6 active adults; baby and toddler stay back or with a grandparent.</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Activity</th><th>Details</th><th>Min. Age</th><th>$/Person</th></tr></thead>
+      <tbody>
+        <tr><td>Río Pacuare Rafting (III–IV)</td><td>Full-day via Desafío or Exploradores. Can be done as rafting-as-transfer from SJO to Arenal on arrival day.</td><td>12 / 110 lb</td><td>$110–$130</td></tr>
+        <tr><td>Canyoneering (Lost Canyon)</td><td>4 rappels (one ~200 ft), pool jumps, canyon zip-lines. Real fitness required.</td><td>8+</td><td>$90–$130</td></tr>
+        <tr class="linked" data-loc="sky"><td>Sky Trek Zipline + Tram</td><td>7 cables up to 750 m, speeds to ~70 km/h. Best volcano/lake views in the region.</td><td>5 / min 1.1 m</td><td>$88–$95</td></tr>
+        <tr><td>Río Balsa Rafting (II–III)</td><td>Half-day, gentler alternative to Pacuare.</td><td>8–10+</td><td>$65–$90</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Whole-Group Track</h3>
+  <p>All ages welcome. Baby rides along in a carrier or stays nearby.</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Activity</th><th>Details</th><th>Baby OK?</th><th>$/Person</th></tr></thead>
+      <tbody>
+        <tr class="linked" data-loc="mistico"><td>Mistico Hanging Bridges</td><td>16 bridges over 3.2 km guided walk. Best wildlife at 6–7 a.m. or night walk.</td><td>Yes (carrier)</td><td>$65–$85</td></tr>
+        <tr class="linked" data-loc="sky"><td>Sky Adventures Aerial Tram</td><td>Low-exertion scenic gondola through canopy. All ages.</td><td>Yes</td><td>$51–$65</td></tr>
+        <tr class="linked" data-loc="tabacon"><td>Tabacón Hot Springs</td><td>Evening pass ~$110 w/ dinner. Most resort-feel.</td><td>Cool pools only</td><td>$110</td></tr>
+        <tr class="linked" data-loc="ecotermales"><td>EcoTermales Fortuna</td><td>Capped attendance, most intimate hot springs.</td><td>Cool pools only</td><td>$49</td></tr>
+        <tr class="linked" data-loc="donjuan"><td>Don Juan Coffee/Chocolate</td><td>Mellow, walkable, all ages. ~2 hours.</td><td>Yes</td><td>$30–$40</td></tr>
+        <tr class="linked" data-loc="bogarin"><td>Bogarín Trail (Sloth Walk)</td><td>1–2 hours, easy flat trail, almost guaranteed sloths.</td><td>Yes</td><td>$30–$40</td></tr>
+        <tr class="linked" data-loc="waterfall"><td>La Fortuna Waterfall</td><td>500 steps down to swimming hole. Baby stays back.</td><td>Stays back</td><td>$18</td></tr>
+        <tr class="linked" data-loc="manuelantonio"><td>Manuel Antonio Nat'l Park</td><td>Manglar trail: 726 m accessible boardwalk. Closed Tuesdays.</td><td>Yes</td><td>$18 entry</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Budget roughly <strong>$400–$700 per active adult</strong> on activities across the week.</p>
+
+  <h3>Free & Low-Cost Options</h3>
+  <p>Not everything costs $65+. These fill downtime without draining the budget.</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Activity</th><th>Details</th><th>Baby OK?</th><th>Cost</th></tr></thead>
+      <tbody>
+        <tr><td>Arenal Volcano National Park</td><td>Self-guided trails through old lava flows. Easy 3 km loop. Volcano views.</td><td>Yes (carrier)</td><td>$15/person</td></tr>
+        <tr><td>Río Cholín free hot springs</td><td>Natural thermal river under a bridge on the road to Tabacón. Locals use it daily. No facilities – bring a towel.</td><td>Adults only (uneven riverbed)</td><td>Free</td></tr>
+        <tr><td>La Fortuna town evening walk</td><td>Central park, church, fruit stands, souvenir shops. Casual and walkable.</td><td>Yes</td><td>Free</td></tr>
+        <tr><td>Resort grounds wildlife</td><td>Most Arenal lodges have toucans, agoutis, coatis, and iguanas on the property. Bring binoculars.</td><td>Yes</td><td>Free</td></tr>
+        <tr><td>Lake Arenal scenic drive</td><td>If you have a rental car, the road along the lake has pulloffs with volcano views. Good for a slow morning.</td><td>Yes</td><td>Free (gas only)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ════════ LOGISTICS & HEALTH (collapsed) ════════ -->
+<section id="logistics">
+  <h2>Logistics, Health & Holiday Tactics</h2>
+
+  <h3>Getting There</h3>
+  <p>Fly nonstop from ORD to SJO on United or American (~5 hours, 9+ weekly frequencies). Round-trip economy during peak holiday: $600–$1,000. For ground transport, a private shuttle (Adobe, Interbus) in a Sprinter runs ~$200–$250 one-way SJO→Arenal for the whole vehicle. Once in La Fortuna, most tour operators include hotel pickup, so a rental car isn't strictly necessary. If renting, get a 7-passenger 4WD SUV (~$95–$160/day). Costa Rican law requires car seats for children 12 and under – bring your own infant bucket seat (free gate-check on most airlines).</p>
+
+  <h3>Weather & What to Pack</h3>
+  <p>Late December in Arenal is warm – daytime highs around 85°F (30°C), cooling to the low 70s at night. Brief afternoon showers are possible even in "dry season" but rarely last more than an hour. Humidity runs 70–85%. Trails can be muddy in spots.</p>
+  <p><strong>Footwear:</strong> Closed-toe hiking shoes or trail sandals (Keen/Teva style) for guided walks. Flip-flops for the pool and hot springs. No need for heavy boots. <strong>Clothing:</strong> Light, breathable layers. Long sleeves for dusk (mosquitoes). A packable rain shell. Restaurants in La Fortuna are casual – no one dresses up, even at resort dinners. <strong>Sun & bugs:</strong> Mineral sunscreen (reef-safe preferred), a wide-brim hat, and picaridin repellent (Sawyer 20%). Mosquitoes are real, especially at dawn and dusk.</p>
+
+  <h3>Health & Safety</h3>
+  <div class="callout warn">
+    <strong>Dengue is the most important health consideration.</strong> Costa Rica recorded 31,259 dengue cases in 2024 – a 153% jump and a record epidemic. The U.S. Embassy issued a health alert in October 2024. Zika is also present but at lower levels (32 cases in 2024). La Fortuna at 830 ft is within Aedes mosquito range. Mitigation: AC rooms with screens, picaridin repellent (Sawyer 20% – safer for infants than DEET), netting over the bassinet, long sleeves at dusk. Recheck case counts closer to departure.
+  </div>
+  <p>La Fortuna has a private 24/7 clinic (Sanar, ~$50–$60 walk-in). For serious issues, <strong>Hospital CIMA San José</strong> (JCI-accredited, +506 2208 1000) is 2.5 hours away with 24/7 pediatric emergency. Diapers, formula, and wipes (Pampers, Huggies, Similac) are widely available at MegaSuper/MaxiPalí.</p>
+  <p><strong>Entry requirements (U.S. travelers):</strong> No visa needed for stays under 180 days. Valid passport for duration of stay plus proof of onward travel. No current COVID-specific entry requirements as of May 2026.</p>
+
+  <h3>Holiday-Specific Tactics</h3>
+  <ul>
+    <li><strong>Book by mid-July 2026.</strong> 90% of holiday-week rooms gone by September.</li>
+    <li><strong>3–7 night minimums</strong> at most luxury properties over Christmas–New Year.</li>
+    <li><strong>Mandatory gala dinners</strong> on Dec 24 and Dec 31. Nayara charges $172.20/person; The Springs and Tabacón have similar surcharges. <strong>Private-villa path skips these.</strong></li>
+    <li><strong>Tabacón requires full non-refundable payment 45 days out</strong> for Dec 18–Jan 8 arrivals.</li>
+    <li><strong>20–50% premium</strong> above normal high-season rates. Rental cars roughly double.</li>
+  </ul>
+</section>
+
+<!-- ════════ BUDGET ════════ -->
+<section id="budget">
+  <h2>Budget</h2>
+  <p>Group of 8, ~10 nights, peak season. The realistic middle path – private villa at ~$900/night, full activity slate, private shuttles – lands at roughly <strong>$26,000–$32,000 all-in for the group</strong>. The table below shows the full range from budget villa to luxury resort, but the low and high extremes are unlikely for this trip.</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Line Item</th><th>Budget Path</th><th>Middle Path</th><th>Luxury Resort</th></tr></thead>
+      <tbody>
+        <tr><td>Flights ORD↔SJO (8 pax)</td><td>$4,800</td><td>$6,400</td><td>$9,000</td></tr>
+        <tr><td>Lodging, 9–10 nights</td><td>$4,000</td><td>$9,000</td><td>$50,000+</td></tr>
+        <tr><td>Mandatory gala dinners</td><td>$0 (villa)</td><td>$0 (villa)</td><td>$2,040</td></tr>
+        <tr><td>Activities (6 adults)</td><td>$3,000</td><td>$3,600</td><td>$4,500</td></tr>
+        <tr><td>Shuttles + local transport</td><td>$700</td><td>$1,000</td><td>$1,500</td></tr>
+        <tr><td>Food & dining</td><td>$1,500</td><td>$2,500</td><td>$3,500</td></tr>
+        <tr><td>Tips, incidentals, insurance</td><td>$1,000</td><td>$1,500</td><td>$2,000</td></tr>
+        <tr style="background:var(--accent-light);font-weight:700;"><td>TOTAL</td><td>~$14,000</td><td>~$26,000–$32,000</td><td>~$72,000+</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>The luxury column reflects places like Nayara Tented Camp (~$5,700/night) or The Springs' Falcon's Nest villa. These are options, not expectations – the middle path covers a high-quality private villa with chef access, all the best activities, and comfortable transport.</p>
+
+  <div class="callout">
+    <strong>Stretching the budget:</strong> The biggest lever is lodging. Volcano Lodge & Hot Springs ($130–$250/night for 3–4 rooms) or Hotel Lomas del Volcán ($120–$220/night) bring the total lodging cost to $4,000–$8,000 instead of $9,000+. For meals, La Fortuna's <em>sodas</em> (local family-run restaurants) serve casados, rice plates, and fresh juices for $6–$12/person – genuinely good food. Shared shuttles (Interbus, Grayline) run $30–$55/person versus $200–$250/vehicle for private. And the free hot springs at Río Cholín are a legitimate local experience worth doing regardless of budget.
+  </div>
+</section>
+
+<!-- ════════ CAVEATS ════════ -->
+<section id="caveats">
+  <h2>Caveats & Open Questions</h2>
+  <ul>
+    <li>Falcon's Nest peak-season pricing is not publicly published; the $5,000–$8,000+/night range is an estimate. Treat as TBD until you have a direct quote.</li>
+    <li>Mandatory gala dinner pricing at The Springs and Tabacón is not publicly listed; only Nayara publishes theirs ($172.20/person).</li>
+    <li>Crib, high chair, babysitting, and laundry specifics were not consistently published. Confirm in writing before booking.</li>
+    <li>Dengue 2024 was a record epidemic. The 2026 situation should be rechecked closer to departure.</li>
+    <li>If the baby is medically fragile, reconsider or switch to a single-base closer to Hospital CIMA.</li>
+    <li>Flight inventory for groups of 8 during peak holiday week is tight – the sooner the better.</li>
+  </ul>
+</section>
+
+</main>
+
+<footer>
+  <p>Prepared May 2026. Research synthesized from two independent passes covering lodging, activities, logistics, and health considerations. Photos via Google Places.</p>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+  // ── Photo references (Google Places imagery) ──
+  const PHOTOS = {
+    sjo:           { url: 'https://lh3.googleusercontent.com/place-photos/AJRVUZMO4fyzxDnxlg6U-CrrVXFcb6lmCoZkIbV-VhltOjwPw0TZZuoukJllSc2axys0fAAmOelZTLMERoDLVvWyN4al97-3iBBS7Ol3-lgucdwms-Y5tHOP7X24KUluFuITuhUB1taeK2s0g6C7sJ4=s4800-w800-h600', caption: 'Juan Santamaría International Airport', sub: 'Modern, easy to navigate, your gateway' },
+    xandari:       { url: 'https://lh3.googleusercontent.com/places/ANXAkqGvcwJN1-DBVZ0bUsmHksJo5Vo9QP4EaeE6TsZNDZGxgRJ2zgjeJX_b8e2YwpaHVAKXXzyy7EL_hNPOBJBart6y0y4WqAd5_rg=s4800-w800-h600', caption: 'Xandari Resort & Spa', sub: 'On-property waterfalls, 20 min from SJO' },
+    springs:       { url: 'https://lh3.googleusercontent.com/places/ANXAkqHw8BvnQKb0Y5wzC3vFCiyo5XI5P9b2--PZ-_vtDhtUtjX9TsUw1VZjfSAOfZP1tKd26vPHkASPWjMbYyOKJktkweOgSYHVzBU=s4800-w800-h600', caption: 'The Springs Resort & Spa', sub: '28 hot-spring pools, Club Río adventure center' },
+    nayara:        { url: 'https://lh3.googleusercontent.com/places/ANXAkqECZK4Lcxn58BRb09YEXoIjBbfn6QaIZClSi0sZVT9oqsnMCH08JKKHfeuAp0IvxnHuZ08EF_XQz6x5xvtacBjbWqqXZCTRSHk=s4800-w800-h600', caption: 'Nayara Tented Camp', sub: 'Luxe tents with private plunge pools' },
+    manoa:         { url: 'https://lh3.googleusercontent.com/places/ANXAkqE0LfBNr28BY5K-oL0IKEKJE6EePDY90btj1dm94YdBNy5QWN9TSVJEhzqJ_yAh6b2bnvJjw-n1ArDtY81WCp2EXYO9__ku6Eo=s4800-w800-h600', caption: 'Arenal Manoa', sub: 'Stand-alone bungalows around the gardens' },
+    observatory:   { url: 'https://lh3.googleusercontent.com/places/ANXAkqExFxv38zUNETBkHZuUUL4uQeEuI1S7WyhZ7s48USe8xrfbHhRh5fWHWoFLlhm4OuVi4Xd72RlP7dbqntK1BgmWKjELHBHKGDs=s4800-w800-h600', caption: 'Arenal Observatory Lodge', sub: 'Closest you can sleep to the volcano' },
+    mistico:       { url: 'https://lh3.googleusercontent.com/place-photos/AJRVUZPemKD2v1qBqvwPH3tEQ1Q3_9HaZs6mUDVKVx_b998Qf-_cptChjJ9DJUoivA-lNtSSr8plI7pRQJiBGIMLMkeHJ4ZEjqHq2KKStZKxAM9KuKjLdOCt1hAfvWjGdLDIjsiMX9JOd4-mvIycjQ=s4800-w800-h600', caption: 'Mistico Hanging Bridges', sub: '16 bridges over rainforest canopy' },
+    sky:           { url: 'https://lh3.googleusercontent.com/places/ANXAkqGcAO4eQ4dM_mwjW5oFO9bGT-74d7lYGfPF3e08DxUZ5uV6q22DtV2LeMMsCTfEzoxoiqBkEzq8JN9vvi9vNJbMm1adSwcoay8=s4800-w800-h600', caption: 'Sky Adventures', sub: 'Zipline + aerial tram with volcano views' },
+    tabacon:       { url: 'https://lh3.googleusercontent.com/places/ANXAkqGDg8coGJucTguuGl6FbHgE1WfqBiaF6Cf_GmyW98i1sDewxlYltxy91DM54cTodh_QhD4TnUthgtTgr6Hoe6LX4VlghpUNJlM=s4800-w800-h600', caption: 'Tabacón Hot Springs', sub: 'Natural thermal river through the forest' },
+    ecotermales:   { url: 'https://lh3.googleusercontent.com/places/ANXAkqG0zQNfWaoeOI4spc6mqCI8tUSpJs8PctCTBbQbLYVpAG9wAxVT-01VSTdu26jwQoh6ZcOj-pV7n9WVFzFayaZeRc1Joi5_9Vk=s4800-w800-h312', caption: 'EcoTermales Fortuna', sub: 'Capped attendance, intimate jungle pools' },
+    waterfall:     { url: 'https://lh3.googleusercontent.com/place-photos/AJRVUZNgQXb1jQ88zrTTXTSpa3Xgof6AtAGGslAyFf3KWz6goxIXYHzZ1mEOHDluAkt8CI-iObEI9pNYhUoEQ-_MDSV9xqUog1eKAnmlSiu8u18gY3w6h17uX3RK7OWmrgAyOBq9Gh8e88RrUMm7WZs=s4800-w800-h600', caption: 'La Fortuna Waterfall', sub: '500 steps down to the swimming hole' },
+    donjuan:       { url: 'https://lh3.googleusercontent.com/places/ANXAkqHaLjeLVPLDXQ2ymAdn70ZN3t6CtwmD6QIeUvECmUufv0F1ix60q9wNntFJU7ZkUGsAbpe0blBW3aVl49XSTTqBLmo8TFPezZo=s4800-w800-h600', caption: 'Don Juan Coffee & Chocolate', sub: 'Make your own bar from raw cacao' },
+    bogarin:       { url: 'https://lh3.googleusercontent.com/place-photos/AJRVUZOErGvfB_Hx6avuXJfZOGO8nkUJ-iVjrGr6EEQKKc7clzXS-YQlKYBbPP5wjyrJ_3P3Alkcogu7kZweLKhVLwn7lAIYtNSNqBUzCWJb9zgiCBZPKSFso0q8xKeGBxEEeTOiDFhGxG-aCKau0bo=s4800-w800-h600', caption: 'Bogarín Trail', sub: 'Almost guaranteed sloth sightings' },
+    tulemar:       { url: 'https://lh3.googleusercontent.com/places/ANXAkqFLae0xB6YNhhYLCKe8X3SyIJTvmlw4vIB1TXQBe7YpXxIlFy9YDW0aXNBstg_XefRCOG3MypcBpYgLkGV2OnHMYnmRaJxXw9E=s4800-w800-h600', caption: 'Tulemar Resort', sub: 'Villas tucked into Manuel Antonio jungle' },
+    sicomono:      { url: 'https://lh3.googleusercontent.com/places/ANXAkqHlIXK7tGus9qvcXUx2M1yAD_uHX6VFMt9Oek9c6Ec3R4lRHqXa-psQyTeThlsn6qrOY7u43Ue08nkJ3Vmy1x2yh7hglspwbiA=s4800-w800-h600', caption: 'Sí Como No Resort', sub: 'Family-friendly cliffside, walks to park' },
+    manuelantonio: { url: 'https://lh3.googleusercontent.com/place-photos/AJRVUZN-eDq1lZef-JsGl5uAVGMItn0m577JzKk-hFWk2zmnKVfHotUb5-cge_SR-kvFeV7Mec90iqEhiNxemBAYaTQ0BKTP2WiLY3wywRiRYDGM0iMw1-ccZQBg640KJtS440mIeZ9moP1xZg_7NVAmkX-H1g=s4800-w800-h600', caption: 'Manuel Antonio National Park', sub: 'Sloths, monkeys, and beach in one walk' },
+    volcanolodge:  { url: 'https://lh3.googleusercontent.com/places/ANXAkqGoWwScrf-e-Kn7U5n-rO_76frX0F4PeEWDnxhN2__Et8DsQ3L80B4N_Y3Sd9F7y9FCHSB7PbS5oW5I7XewlwmtaNJYEkvE0vQ=s4800-w800-h576', caption: 'Volcano Lodge & Hot Springs', sub: 'Budget-friendly with on-site thermal pools' },
+
+    // Ruled-out regions
+    caribbean:     { url: 'https://lh3.googleusercontent.com/place-photos/AJRVUZNSIm2IA8ZswAkWkD7Iy5ud-8LwGStcHBNvViUTG38a2pZOi2OV8l7zn9EmpN2dSYvClX-pah3dmTvPobP6_dGfta3FF-7su-74dx--vwrz1Cmk0xkxuE42GW9EpRhuNTmkmrIowZqYXLDGtQ=s4800-w800-h600', caption: 'Tortuguero National Park', sub: 'Boat-access canals on the Caribbean side' },
+    guanacaste:    { url: 'https://lh3.googleusercontent.com/place-photos/AJRVUZOn9nHYv_ESSA6KztSA31EbVvvYwshA1umjK-t-AP6gzgYf4dX1XS8CF1Js-pxxe1Fq8RtAR2CgA5kpGDwGx8qX0P2-BFzC4wikuo1cZIrbY5AY659MHeSn3HYrGSUEP_0JX7oc4tPWurYo=s4800-w680-h340', caption: 'Tamarindo Beach', sub: 'Reliable December sun, surf-town vibe' },
+    nicoya:        { url: 'https://lh3.googleusercontent.com/place-photos/AJRVUZPeWA9l0e_CrSGi4F3xQA1ouXWzGo2pBPOtTLAnSba98mHozQ2T-0Gq9iPIBZKfEP4njE3a4WBoYVypLfbMLQPVMJFd9wb63W9wadcLJfrxZkn6Ux6eWwJ7GQ_sYmrqOyH5bOgZgYvwzAS1ZhE=s4800-w800-h600', caption: 'Santa Teresa Beach', sub: 'Surf, yoga, and sunset country' },
+    osa:           { url: 'https://lh3.googleusercontent.com/place-photos/AJRVUZPIqQQBBjrmGprjQvrV3s8jSmDsjGy36GJjA1u9UKOyt2tI0G6rMvP518p0_8aMQ6yxxNxEWBZx5WLJvUWY4OU2gJVavWDi76IvB50JpHgyKRd_wlj-7giRZ6eQpJBqgRZBPpn__0d2vajTrMM=s4800-w800-h600', caption: 'Corcovado National Park', sub: 'Biodiversity capital, remote access' },
+    monteverdereg: { url: 'https://lh3.googleusercontent.com/place-photos/AJRVUZOrcPDdfqREFGbb2fzv_a4yAaZaLCpAF_F32BipDBFD0GDw1Mk88w3fm_HRAUH7LhUEADsJ3jxDHA3Xla8L5r1xJSjRAZ-sBZI2CA02STXNgbKQamFIuwGY5EhxUeIMOhOyOSl45h2vx_pv=s4800-w800-h600', caption: 'Monteverde Cloud Forest', sub: 'Misty trails, cooler and damper' },
+    rincon:        { url: 'https://lh3.googleusercontent.com/place-photos/AJRVUZNHTb9oSb2r67aV1aJB9epUNhjTcigL8zOsIQl3ch35VfErtLZ4zQwtIbN1br4CzERfkuItXuw1Je3tIwsff3tbYPjddaLwrOXnudcrhAWrNkOPzXmD-nyNW2p5UelaGKu6TurozMvm9dG6FMk=s4800-w631-h600', caption: 'Rincón de la Vieja', sub: 'Volcano with mud pots and waterfalls' },
+    sanjose:       { url: 'https://lh3.googleusercontent.com/place-photos/AJRVUZOEdkYO1wkMXRUZo6EIGnlHCNPgPNtrbwZX-XJ_cPecJv2YIatrNWLvI29vSqhj6EcocY-wuIcHlGwAwERCNfdnh-rk_O_QeaJiVW-WYnf_sQalokIGYKG4ugAUcgNc0UBtrpqX_2IArDN2tYbiXut-8g=s4800-w800-h600', caption: 'National Theatre, San José', sub: 'Belle Époque centerpiece downtown' },
+  };
+
+  // ── Inject photo-peek icons into linked rows ──
+  const CAMERA_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>';
+
+  document.querySelectorAll('tr.linked').forEach(row => {
+    const id = row.dataset.loc;
+    if (!id || !PHOTOS[id]) return;
+    const firstCell = row.querySelector('td');
+    if (!firstCell) return;
+    const peek = document.createElement('span');
+    peek.className = 'photo-peek';
+    peek.dataset.peekId = id;
+    peek.setAttribute('aria-label', 'Show photo of ' + PHOTOS[id].caption);
+    peek.innerHTML = CAMERA_SVG;
+    firstCell.appendChild(peek);
+  });
+
+  document.querySelectorAll('h3[data-loc]').forEach(h3 => {
+    const id = h3.dataset.loc;
+    if (!id || !PHOTOS[id]) return;
+    const peek = document.createElement('span');
+    peek.className = 'photo-peek';
+    peek.dataset.peekId = id;
+    peek.setAttribute('aria-label', 'Show photo of ' + PHOTOS[id].caption);
+    peek.innerHTML = CAMERA_SVG;
+    h3.appendChild(peek);
+  });
+
+  // ── Floating preview tooltip ──
+  const preview = document.createElement('div');
+  preview.className = 'floating-preview';
+  document.body.appendChild(preview);
+  let activeId = null;
+
+  function showPreview(peekEl) {
+    const id = peekEl.dataset.peekId;
+    const photo = PHOTOS[id];
+    if (!photo) return;
+    activeId = id;
+    preview.innerHTML = `<img src="${photo.url}" alt="${photo.caption}" loading="lazy"/><div class="fp-caption">${photo.caption}</div><div class="fp-sub">${photo.sub}</div>`;
+    const rect = peekEl.getBoundingClientRect();
+    const previewWidth = 260;
+    let left = rect.left + window.scrollX + (rect.width / 2) - (previewWidth / 2);
+    // Keep within viewport
+    const maxLeft = window.scrollX + document.documentElement.clientWidth - previewWidth - 12;
+    const minLeft = window.scrollX + 12;
+    left = Math.max(minLeft, Math.min(left, maxLeft));
+    // Position above if there's room, otherwise below
+    const previewHeight = 220;
+    const spaceBelow = window.innerHeight - rect.bottom;
+    let top;
+    if (spaceBelow > previewHeight + 20) {
+      top = rect.bottom + window.scrollY + 10;
+    } else {
+      top = rect.top + window.scrollY - previewHeight - 10;
+    }
+    preview.style.left = left + 'px';
+    preview.style.top = top + 'px';
+    preview.classList.add('visible');
+    peekEl.classList.add('active');
+  }
+
+  function hidePreview() {
+    preview.classList.remove('visible');
+    document.querySelectorAll('.photo-peek.active').forEach(p => p.classList.remove('active'));
+    activeId = null;
+  }
+
+  // Desktop: hover
+  document.addEventListener('mouseover', (e) => {
+    const peek = e.target.closest('.photo-peek');
+    if (peek) showPreview(peek);
+  });
+  document.addEventListener('mouseout', (e) => {
+    const peek = e.target.closest('.photo-peek');
+    if (peek && !preview.contains(e.relatedTarget)) {
+      hidePreview();
+    }
+  });
+
+  // Mobile: tap-to-toggle
+  document.addEventListener('click', (e) => {
+    const peek = e.target.closest('.photo-peek');
+    if (peek) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (peek.classList.contains('active')) {
+        hidePreview();
+      } else {
+        hidePreview(); // clear any existing
+        showPreview(peek);
+      }
+    } else if (!preview.contains(e.target)) {
+      hidePreview();
+    }
+  });
+
+  // Hide on scroll to avoid stale positioning
+  let scrollTimer;
+  window.addEventListener('scroll', () => {
+    if (activeId) {
+      clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(hidePreview, 100);
+    }
+  }, { passive: true });
+
+  const places = [
+    { id:'sjo', lat:9.9982, lng:-84.2048, name:"SJO Airport", note:"International gateway", cat:'transport' },
+    { id:'xandari', lat:10.057, lng:-84.2119, name:"Xandari Resort & Spa", note:"Arrival/departure buffer night", cat:'lodging' },
+    { id:'springs', lat:10.5192, lng:-84.6882, name:"The Springs Resort & Spa", note:"Lodging A – Falcon's Nest villa", cat:'lodging' },
+    { id:'nayara', lat:10.5051, lng:-84.6888, name:"Nayara Tented Camp", note:"Lodging B – Casa Paloma residence", cat:'lodging' },
+    { id:'manoa', lat:10.5008, lng:-84.6802, name:"Arenal Manoa", note:"Mid-range lodging option", cat:'lodging' },
+    { id:'observatory', lat:10.4379, lng:-84.7102, name:"Arenal Observatory Lodge", note:"870-acre nature lodge", cat:'lodging' },
+    { id:'volcanolodge', lat:10.4986, lng:-84.6868, name:"Volcano Lodge & Hot Springs", note:"Best-value on-site hot springs", cat:'lodging' },
+    { id:'mistico', lat:10.4875, lng:-84.7542, name:"Mistico Hanging Bridges", note:"16 bridges, 3.2 km – all ages", cat:'activity' },
+    { id:'sky', lat:10.4269, lng:-84.7349, name:"Sky Adventures Arenal", note:"Zipline + aerial tram", cat:'activity' },
+    { id:'tabacon', lat:10.4881, lng:-84.7224, name:"Tabacón Hot Springs", note:"Evening pass ~$110 w/ dinner", cat:'activity' },
+    { id:'ecotermales', lat:10.4839, lng:-84.675, name:"EcoTermales Fortuna", note:"Capped attendance, most intimate", cat:'activity' },
+    { id:'waterfall', lat:10.4418, lng:-84.6674, name:"La Fortuna Waterfall", note:"500 steps – baby stays back", cat:'activity' },
+    { id:'donjuan', lat:10.4806, lng:-84.638, name:"Don Juan Coffee & Chocolate", note:"All ages, 2 hr tour", cat:'activity' },
+    { id:'bogarin', lat:10.4703, lng:-84.6507, name:"Bogarín Trail", note:"Flat sloth walk – $10/person", cat:'activity' },
+    { id:'tulemar', lat:9.4079, lng:-84.1584, name:"Tulemar Resort", note:"MA lodging – villas with kitchens", cat:'lodging' },
+    { id:'sicomono', lat:9.4038, lng:-84.1551, name:"Sí Como No Resort", note:"MA lodging – family resort", cat:'lodging' },
+    { id:'manuelantonio', lat:9.3923, lng:-84.137, name:"Manuel Antonio National Park", note:"Manglar trail – accessible boardwalk", cat:'activity' },
+  ];
+
+  const COLORS = { lodging: '#1b6b4a', activity: '#c4763a', transport: '#3b82f6' };
+  const CAT_LABELS = { lodging: 'Lodging', activity: 'Activity', transport: 'Transport' };
+
+  const mapEl = document.getElementById('map');
+  let mapMode = false;
+  let map = null;
+  const markerMap = {};
+
+  // Try to init Leaflet if it loaded
+  if (typeof L !== 'undefined' && L && typeof L.map === 'function') {
+    try {
+      map = L.map('map', { scrollWheelZoom: false }).setView([10.05, -84.45], 8);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors',
+        maxZoom: 18
+      }).addTo(map);
+
+      function buildIcon(color, id) {
+        return L.divIcon({
+          className: 'custom-marker',
+          html: `<div class="marker-dot" data-id="${id}" style="
+            width:16px;height:16px;border-radius:50%;
+            background:${color};border:2.5px solid #fff;
+            box-shadow:0 1px 5px rgba(0,0,0,0.4);
+            transition:transform 0.2s;
+          "></div>`,
+          iconSize: [16,16],
+          iconAnchor: [8,8],
+          popupAnchor: [0,-10]
+        });
+      }
+
+      places.forEach(p => {
+        const photo = PHOTOS[p.id];
+        const imgHtml = photo ? `<img class="popup-img" src="${photo.url}" alt="${photo.caption}" loading="lazy"/>` : '';
+        const marker = L.marker([p.lat, p.lng], { icon: buildIcon(COLORS[p.cat], p.id) })
+          .addTo(map)
+          .bindPopup(`
+            ${imgHtml}
+            <div class="popup-name">${p.name}</div>
+            <div class="popup-note">${p.note}</div>
+            <span class="popup-link" data-jump="${p.id}">Jump to details →</span>
+          `);
+        markerMap[p.id] = marker;
+      });
+
+      const bounds = L.latLngBounds(places.map(p => [p.lat, p.lng]));
+      map.fitBounds(bounds.pad(0.12));
+      mapMode = true;
+    } catch (e) {
+      console.warn('Map init failed, showing fallback:', e);
+      mapMode = false;
+    }
+  }
+
+  // Fallback: render a static list when Leaflet isn't available
+  if (!mapMode && mapEl) {
+    mapEl.style.height = 'auto';
+    mapEl.style.padding = '1.25rem';
+    mapEl.style.background = '#fff';
+    mapEl.style.display = 'block';
+
+    const grouped = {
+      Arenal: places.filter(p => p.lat > 10.3 && p.lng < -84.4),
+      'Central Valley': places.filter(p => p.lat < 10.3 && p.lng > -84.4),
+      'Manuel Antonio': places.filter(p => p.lat < 10 && p.lng < -84.0),
+    };
+
+    let html = '<div style="font-size:0.85rem;color:#6b7280;margin-bottom:1rem;font-style:italic;">Interactive map could not load. Locations grouped by region below — tap any pin to open in Google Maps.</div>';
+
+    Object.keys(grouped).forEach(region => {
+      if (!grouped[region].length) return;
+      html += `<div style="margin-bottom:1.25rem;"><div style="font-family:'DM Serif Display',serif;font-size:1.1rem;color:#0f3d2b;margin-bottom:0.5rem;">${region}</div>`;
+      html += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:0.5rem;">';
+      grouped[region].forEach(p => {
+        const color = COLORS[p.cat];
+        const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${p.lat},${p.lng}`;
+        html += `
+          <a href="${mapsUrl}" target="_blank" rel="noopener" data-loc-link="${p.id}" style="
+            display:flex;gap:0.5rem;align-items:flex-start;
+            text-decoration:none;color:inherit;
+            padding:0.55rem 0.7rem;border:1px solid #e5e2dc;border-radius:6px;
+            background:#faf9f6;transition:all 0.2s;
+          ">
+            <span style="
+              width:10px;height:10px;border-radius:50%;background:${color};
+              margin-top:5px;flex-shrink:0;box-shadow:0 0 0 2px #fff;
+            "></span>
+            <span style="font-size:0.85rem;line-height:1.35;">
+              <span style="font-weight:600;color:#1a1a1a;">${p.name}</span><br>
+              <span style="font-size:0.76rem;color:#6b7280;">${p.note}</span>
+            </span>
+          </a>
+        `;
+      });
+      html += '</div></div>';
+    });
+
+    mapEl.innerHTML = html;
+  }
+
+  // ── Row & card linkage (works in both map and fallback modes) ──
+  document.querySelectorAll('tr.linked, .photo-card[data-loc]').forEach(el => {
+    const id = el.dataset.loc;
+    if (!id) return;
+
+    if (mapMode && markerMap[id]) {
+      el.addEventListener('mouseenter', () => {
+        const m = markerMap[id];
+        const el2 = m.getElement();
+        if (el2) {
+          const dot = el2.querySelector('.marker-dot');
+          if (dot) dot.classList.add('marker-pulse');
+        }
+      });
+      el.addEventListener('mouseleave', () => {
+        const m = markerMap[id];
+        const el2 = m.getElement();
+        if (el2) {
+          const dot = el2.querySelector('.marker-dot');
+          if (dot) dot.classList.remove('marker-pulse');
+        }
+      });
+    }
+
+    el.addEventListener('click', (e) => {
+      if (e.target.tagName === 'A' || e.target.tagName === 'INPUT') return;
+      if (e.target.closest('.photo-peek')) return;
+      if (mapMode && markerMap[id] && map) {
+        const m = markerMap[id];
+        map.flyTo([m.getLatLng().lat, m.getLatLng().lng], 12, { duration: 0.8 });
+        setTimeout(() => m.openPopup(), 850);
+      } else if (!mapMode) {
+        // Highlight the fallback list item
+        const link = document.querySelector(`[data-loc-link="${id}"]`);
+        if (link) {
+          link.style.background = '#fff2c2';
+          setTimeout(() => link.style.background = '#faf9f6', 1500);
+        }
+      }
+      document.getElementById('map').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  });
+
+  // Popup "Jump to details" link
+  document.addEventListener('click', (e) => {
+    if (e.target.classList && e.target.classList.contains('popup-link')) {
+      const id = e.target.dataset.jump;
+      const row = document.querySelector(`tr.linked[data-loc="${id}"]`);
+      if (row) {
+        row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        row.classList.remove('flash');
+        void row.offsetWidth;
+        row.classList.add('flash');
+      }
+    }
+  });
+
+});
+</script>
+
+</body>
+</html>
