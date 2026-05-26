@@ -386,6 +386,60 @@ nav a:hover { color: var(--accent); }
   #testimonials::before { font-size: 8rem; }
 }
 
+/* ── Photo gallery ── */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  margin: 1.5rem 0 0.5rem;
+}
+.gallery-item {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  aspect-ratio: 4/3;
+  cursor: default;
+}
+.gallery-item.wide {
+  grid-column: span 2;
+  aspect-ratio: 16/9;
+}
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+.gallery-item:hover img { transform: scale(1.04); }
+.gallery-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 2rem 0.75rem 0.6rem;
+  background: linear-gradient(transparent, rgba(0,0,0,0.65));
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+.gallery-caption span {
+  display: block;
+  font-weight: 400;
+  font-size: 0.72rem;
+  opacity: 0.8;
+  margin-top: 2px;
+}
+@media (max-width: 720px) {
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+  .gallery-item.wide { grid-column: span 2; }
+}
+@media (max-width: 480px) {
+  .gallery-grid { grid-template-columns: 1fr; }
+  .gallery-item.wide { grid-column: span 1; }
+}
+
 /* ── Ruled-out items with inline images ── */
 .ruled-out-item {
   display: flex;
@@ -852,6 +906,53 @@ footer {
         <span class="pattern-icon">!</span>
         <span>Hot springs are too warm for 6-month-olds; pick a resort with cool pools too</span>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ PHOTO GALLERY ════════ -->
+<section id="gallery">
+  <h2>What Arenal Looks Like</h2>
+  <div class="gallery-grid">
+    <div class="gallery-item wide">
+      <img src="https://lh3.googleusercontent.com/place-photos/AJRVUZMojxcqHRexgpUrX8Q414agH1h9H_ulGAk9oKXn6NIZrqZMdEMsBb8F5DdvXfFLMWFN-lYpHrvTT4dYY-mDLauar97HbX4f7PJooWaagsp-QnsXm-2ldOUHs7h4L1kssmZcc90z3wlaQw0AaA=s4800-w800-h600" alt="Arenal Volcano" loading="lazy">
+      <div class="gallery-caption">Arenal Volcano<span>From the 1968 lava trail</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://lh3.googleusercontent.com/places/ANXAkqGDg8coGJucTguuGl6FbHgE1WfqBiaF6Cf_GmyW98i1sDewxlYltxy91DM54cTodh_QhD4TnUthgtTgr6Hoe6LX4VlghpUNJlM=s4800-w800-h600" alt="Tabacón Hot Springs" loading="lazy">
+      <div class="gallery-caption">Tabacón Hot Springs<span>Thermal river through the forest</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://lh3.googleusercontent.com/place-photos/AJRVUZPemKD2v1qBqvwPH3tEQ1Q3_9HaZs6mUDVKVx_b998Qf-_cptChjJ9DJUoivA-lNtSSr8plI7pRQJiBGIMLMkeHJ4ZEjqHq2KKStZKxAM9KuKjLdOCt1hAfvWjGdLDIjsiMX9JOd4-mvIycjQ=s4800-w800-h600" alt="Mistico Hanging Bridges" loading="lazy">
+      <div class="gallery-caption">Mistico Hanging Bridges<span>16 bridges over the canopy</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://lh3.googleusercontent.com/place-photos/AJRVUZM7kBCKjZqyiaEwfyQwHVR9HxXN2DF7WQF3VxxaAsuTE24fAxlXQDgORID_LcYYRPlGIILDlREj5CbZi5CZbQdyMfWm8m2Zcsuy4JC5fBVT3gQGjKoPWDtsR0XHManpQYS7ez-P9xnPpanjIw=s4800-w800-h600" alt="Lake Arenal" loading="lazy">
+      <div class="gallery-caption">Lake Arenal<span>Volcano backdrop on a clear morning</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://lh3.googleusercontent.com/place-photos/AJRVUZNgQXb1jQ88zrTTXTSpa3Xgof6AtAGGslAyFf3KWz6goxIXYHzZ1mEOHDluAkt8CI-iObEI9pNYhUoEQ-_MDSV9xqUog1eKAnmlSiu8u18gY3w6h17uX3RK7OWmrgAyOBq9Gh8e88RrUMm7WZs=s4800-w800-h600" alt="La Fortuna Waterfall" loading="lazy">
+      <div class="gallery-caption">La Fortuna Waterfall<span>500 steps down to the pool</span></div>
+    </div>
+    <div class="gallery-item wide">
+      <img src="https://lh3.googleusercontent.com/places/ANXAkqGc0WHt_X3EphFQFuCyW0kNdkwS_8LQpzfD_0Rn5288N6s9KdopUZYHTDPXE0A53y3kCKTbFXCpepEdT27WnPkl-krQkNVYEQ8=s4800-w800-h600" alt="Pacuare River Rafting" loading="lazy">
+      <div class="gallery-caption">Río Pacuare Rafting<span>Class III–IV through a jungle canyon</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://lh3.googleusercontent.com/place-photos/AJRVUZOErGvfB_Hx6avuXJfZOGO8nkUJ-iVjrGr6EEQKKc7clzXS-YQlKYBbPP5wjyrJ_3P3Alkcogu7kZweLKhVLwn7lAIYtNSNqBUzCWJb9zgiCBZPKSFso0q8xKeGBxEEeTOiDFhGxG-aCKau0bo=s4800-w800-h600" alt="Bogarín Trail" loading="lazy">
+      <div class="gallery-caption">Bogarín Trail<span>Flat walk, almost guaranteed sloths</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://lh3.googleusercontent.com/places/ANXAkqGcAO4eQ4dM_mwjW5oFO9bGT-74d7lYGfPF3e08DxUZ5uV6q22DtV2LeMMsCTfEzoxoiqBkEzq8JN9vvi9vNJbMm1adSwcoay8=s4800-w800-h600" alt="Sky Adventures" loading="lazy">
+      <div class="gallery-caption">Sky Adventures<span>Zipline with volcano views</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://lh3.googleusercontent.com/places/ANXAkqG0zQNfWaoeOI4spc6mqCI8tUSpJs8PctCTBbQbLYVpAG9wAxVT-01VSTdu26jwQoh6ZcOj-pV7n9WVFzFayaZeRc1Joi5_9Vk=s4800-w800-h312" alt="EcoTermales" loading="lazy">
+      <div class="gallery-caption">EcoTermales<span>Intimate hot springs, capped attendance</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://lh3.googleusercontent.com/places/ANXAkqHaLjeLVPLDXQ2ymAdn70ZN3t6CtwmD6QIeUvECmUufv0F1ix60q9wNntFJU7ZkUGsAbpe0blBW3aVl49XSTTqBLmo8TFPezZo=s4800-w800-h600" alt="Don Juan Coffee & Chocolate" loading="lazy">
+      <div class="gallery-caption">Don Juan Coffee & Chocolate<span>Make your own bar from raw cacao</span></div>
     </div>
   </div>
 </section>
